@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0d0f">
+  <meta name="description" content="A tough, modern strength tracker for bodyweight training, goals, and rep counting.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="GRITCORE">
+  <title>GRITCORE — Strength tracker</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="#dashboard" aria-label="GRITCORE home">
+        <span class="brand-mark" aria-hidden="true">G</span>
+        <span>GRIT<span class="brand-light">CORE</span></span>
+      </a>
+      <div class="topbar-actions">
+        <span class="local-badge"><span aria-hidden="true"></span> Saved on this device</span>
+        <button id="install-button" class="button button-outline" type="button" hidden>Install app</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <nav class="navigation" aria-label="Main navigation">
+        <button class="nav-item active" type="button" data-view="dashboard"><span aria-hidden="true">◫</span>
+          Overview</button>
+        <button class="nav-item" type="button" data-view="workout"><span aria-hidden="true">＋</span> Workout</button>
+        <button class="nav-item" type="button" data-view="history"><span aria-hidden="true">◷</span> History</button>
+        <button class="nav-item" type="button" data-view="profile"><span aria-hidden="true">◎</span> My details</button>
+      </nav>
+
+      <main>
+        <section id="view-dashboard" class="view active" aria-labelledby="page-title">
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow" id="today-label">BODYWEIGHT POWER</p>
+              <h1 id="page-title">Train sharp. Move harder.</h1>
+              <p class="muted">No gym. No excuses. Just steady reps, clean form, and real progress.</p>
+            </div>
+            <button class="button button-primary" type="button" data-go-workout>＋ Log session</button>
+          </div>
+
+          <div class="stats-grid" aria-label="Workout statistics">
+            <article class="stat-card">
+              <span class="stat-icon mint" aria-hidden="true">↗</span>
+              <p class="stat-label">Workouts this week</p>
+              <strong id="stat-workouts">0</strong>
+              <span class="stat-foot">Keep your rhythm</span>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon lavender" aria-hidden="true">⌁</span>
+              <p class="stat-label">Reps this week</p>
+              <strong id="stat-reps">0</strong>
+              <span class="stat-foot">Every rep counts</span>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon peach" aria-hidden="true">◷</span>
+              <p class="stat-label">Minutes this week</p>
+              <strong id="stat-minutes">0</strong>
+              <span class="stat-foot">Time well spent</span>
+            </article>
+            <article class="stat-card">
+              <span class="stat-icon sky" aria-hidden="true">✦</span>
+              <p class="stat-label">Weekly goal</p>
+              <strong><span id="stat-goal">3</span><small> sessions</small></strong>
+              <span class="stat-foot" id="goal-progress">Set your own pace</span>
+            </article>
+          </div>
+
+          <div class="content-grid">
+            <section class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">GET MOVING</p>
+                  <h2>Quick start</h2>
+                </div>
+                <button class="text-button" type="button" data-go-workout>See all drills →</button>
+              </div>
+              <div class="quick-grid">
+                <button class="quick-card" type="button" data-quick-start="Push-ups">
+                  <span class="exercise-emoji" aria-hidden="true">💪</span><strong>Push-ups</strong><span>Upper
+                    body</span>
+                </button>
+                <button class="quick-card" type="button" data-quick-start="Squats">
+                  <span class="exercise-emoji" aria-hidden="true">🦵</span><strong>Squats</strong><span>Lower
+                    body</span>
+                </button>
+                <button class="quick-card" type="button" data-quick-start="Sit-ups">
+                  <span class="exercise-emoji" aria-hidden="true">⚡</span><strong>Sit-ups</strong><span>Core</span>
+                </button>
+                <button class="quick-card" type="button" data-quick-start="Plank">
+                  <span class="exercise-emoji" aria-hidden="true">🧘</span><strong>Plank</strong><span>Core &
+                    stability</span>
+                </button>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">YOUR GAIN TRACK</p>
+                  <h2>Recent sessions</h2>
+                </div>
+                <button class="text-button" type="button" data-view-link="history">Open history →</button>
+              </div>
+              <div id="recent-workouts" class="workout-list"></div>
+              <p id="empty-recent" class="empty-state">Your first session is waiting. Start with a few clean reps and
+                build the streak.</p>
+            </section>
+          </div>
+
+          <aside class="notice-card">
+            <span class="notice-icon" aria-hidden="true">ⓘ</span>
+            <p><strong>Privacy:</strong> pose tracking stays in your browser. No video is uploaded or stored. Your
+              progress stays local on this device.</p>
+          </aside>
+        </section>
+
+        <section id="view-workout" class="view" aria-labelledby="workout-title" hidden>
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">YOUR SESSION</p>
+              <h1 id="workout-title">Build the set. Own the grind.</h1>
+              <p class="muted">Use camera counting for push-ups or sit-ups, or log any bodyweight drill manually.</p>
+            </div>
+          </div>
+
+          <div class="workout-layout">
+            <section class="panel camera-panel">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">SMART COACH</p>
+                  <h2>Rep counter</h2>
+                </div>
+                <span class="live-badge"><span></span> On-device</span>
+              </div>
+              <p class="muted small">Keep your phone angled so your full body is visible. This tracker works best for
+                push-up variations and sit-ups.</p>
+              <label class="field-label" for="camera-exercise">Exercise to count</label>
+              <select id="camera-exercise" class="input">
+                <option>Push-ups</option>
+                <option>Wide push-ups</option>
+                <option>Diamond push-ups</option>
+                <option>Knee push-ups</option>
+                <option>Incline push-ups</option>
+                <option>Decline push-ups</option>
+                <option>Pike push-ups</option>
+                <option>Sit-ups</option>
+              </select>
+
+              <div class="camera-frame">
+                <video id="camera-video" playsinline muted aria-label="Live camera preview"></video>
+                <canvas id="pose-canvas" aria-hidden="true"></canvas>
+                <div id="camera-placeholder" class="camera-placeholder">
+                  <span class="camera-symbol" aria-hidden="true">◉</span>
+                  <strong>Your live preview appears here</strong>
+                  <span>Allow camera access when your browser asks.</span>
+                </div>
+                <div class="rep-counter"><span>REPS</span><strong id="rep-count">0</strong></div>
+              </div>
+              <p id="camera-message" class="status-message" role="status">For best results, keep a side view, good
+                lighting, and your full body in frame.</p>
+              <div class="camera-actions">
+                <button id="camera-start" class="button button-primary" type="button">Start camera</button>
+                <button id="camera-stop" class="button button-outline" type="button" disabled>Stop</button>
+                <button id="camera-save" class="button button-dark" type="button" disabled>Save set</button>
+              </div>
+            </section>
+
+            <section class="panel log-panel">
+              <div class="section-heading">
+                <div>
+                  <p class="eyebrow">MANUAL ENTRY</p>
+                  <h2>Log a drill</h2>
+                </div>
+              </div>
+              <form id="workout-form">
+                <label class="field-label" for="exercise">Exercise</label>
+                <select id="exercise" class="input" required></select>
+                <div id="custom-exercise-wrap" hidden>
+                  <label class="field-label" for="custom-exercise">Activity name</label>
+                  <input id="custom-exercise" class="input" type="text" maxlength="60" placeholder="e.g. Bear crawl">
+                </div>
+                <div class="form-row">
+                  <div>
+                    <label class="field-label" for="sets">Sets</label>
+                    <input id="sets" class="input" type="number" min="1" max="99" value="3" inputmode="numeric">
+                  </div>
+                  <div>
+                    <label class="field-label" for="reps">Reps per set</label>
+                    <input id="reps" class="input" type="number" min="0" max="9999" value="10" inputmode="numeric">
+                  </div>
+                </div>
+                <label class="field-label" for="duration">Duration <span class="field-hint">(minutes)</span></label>
+                <input id="duration" class="input" type="number" min="0" max="1440" value="10" inputmode="numeric">
+                <label class="field-label" for="notes">Notes <span class="field-hint">(optional)</span></label>
+                <textarea id="notes" class="input" rows="3" maxlength="300"
+                  placeholder="How did it feel? Any progress to remember?"></textarea>
+                <button class="button button-primary button-full" type="submit">Save session</button>
+              </form>
+              <p class="form-footnote">Log bodyweight drills like lunges, glute bridges, mountain climbers, and more.
+                Add your own custom move too.</p>
+            </section>
+          </div>
+        </section>
+
+        <section id="view-history" class="view" aria-labelledby="history-title" hidden>
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">YOUR PROGRESS</p>
+              <h1 id="history-title">Session history</h1>
+              <p class="muted">Track how the work stacks up over time. You can remove entries from this device any time.
+              </p>
+            </div>
+            <button class="button button-primary" type="button" data-go-workout>＋ Log session</button>
+          </div>
+          <section class="panel">
+            <div id="history-list" class="history-list"></div>
+            <p id="empty-history" class="empty-state">No sessions logged yet. Your progress will show up here.</p>
+          </section>
+        </section>
+
+        <section id="view-profile" class="view" aria-labelledby="profile-title" hidden>
+          <div class="page-heading">
+            <div>
+              <p class="eyebrow">YOUR BASELINE</p>
+              <h1 id="profile-title">Profile</h1>
+              <p class="muted">Set a goal that fits your training. These details stay local on your device.</p>
+            </div>
+          </div>
+          <div class="profile-layout">
+            <section class="panel">
+              <h2>Fitness profile</h2>
+              <form id="profile-form">
+                <label class="field-label" for="profile-name">Name <span class="field-hint">(optional)</span></label>
+                <input id="profile-name" class="input" type="text" maxlength="60" autocomplete="name"
+                  placeholder="What should we call you?">
+                <div class="form-row">
+                  <div>
+                    <label class="field-label" for="profile-age">Age <span class="field-hint">(optional)</span></label>
+                    <input id="profile-age" class="input" type="number" min="13" max="120" inputmode="numeric"
+                      placeholder="Years">
+                  </div>
+                  <div>
+                    <label class="field-label" for="profile-goal">Sessions per week</label>
+                    <input id="profile-goal" class="input" type="number" min="1" max="14" value="3" inputmode="numeric">
+                  </div>
+                </div>
+                <div class="form-row">
+                  <div>
+                    <label class="field-label" for="profile-weight">Weight <span class="field-hint">(kg)</span></label>
+                    <input id="profile-weight" class="input" type="number" min="20" max="350" step="0.1"
+                      inputmode="decimal" placeholder="e.g. 65">
+                  </div>
+                  <div>
+                    <label class="field-label" for="profile-height">Height <span class="field-hint">(cm)</span></label>
+                    <input id="profile-height" class="input" type="number" min="100" max="250" step="0.1"
+                      inputmode="decimal" placeholder="e.g. 170">
+                  </div>
+                </div>
+                <label class="field-label" for="profile-focus">Fitness focus</label>
+                <select id="profile-focus" class="input">
+                  <option value="general">Overall fitness</option>
+                  <option value="strength">Build strength</option>
+                  <option value="endurance">Improve endurance</option>
+                  <option value="mobility">Mobility & flexibility</option>
+                  <option value="consistency">Build a consistent habit</option>
+                </select>
+                <button class="button button-primary" type="submit">Save details</button>
+              </form>
+            </section>
+            <aside class="panel body-card">
+              <p class="eyebrow">BODY CHECK-IN</p>
+              <h2>Your measurements</h2>
+              <p id="bmi-value" class="bmi-value">—</p>
+              <p id="bmi-caption" class="muted small">Add height and weight to see an optional BMI estimate.</p>
+              <p class="disclaimer">BMI is a rough screening measure, not a diagnosis or a complete picture of health.
+                It may not be suitable for everyone.</p>
+              <div class="privacy-box">
+                <strong>Private by design</strong>
+                <p>Your profile and workout history are stored in this browser. Clearing browser data will remove them.
+                  Camera video is not saved.</p>
+                <button id="clear-data" class="text-button danger-text" type="button">Clear all app data</button>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+    <nav class="mobile-navigation" aria-label="Mobile navigation">
+      <button class="nav-item active" type="button" data-view="dashboard"><span
+          aria-hidden="true">◫</span><small>Home</small></button>
+      <button class="nav-item" type="button" data-view="workout"><span
+          aria-hidden="true">＋</span><small>Workout</small></button>
+      <button class="nav-item" type="button" data-view="history"><span
+          aria-hidden="true">◷</span><small>History</small></button>
+      <button class="nav-item" type="button" data-view="profile"><span
+          aria-hidden="true">◎</span><small>Details</small></button>
+    </nav>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script type="module" src="./app.js"></script>
+</body>
+
+</html>
